@@ -23,7 +23,7 @@ public class StateService : IStateService
 
         State state = new State
         {
-            Name = input.Name,
+            Name = input.Name.ToLower(),
             CountryId = input.CountryId,
         };
         await _stateRepo.Add(state);
@@ -51,7 +51,7 @@ public class StateService : IStateService
 
     public async Task<StateResponseDto?> GetByName(string name)
     {
-        var state = await _stateRepo.GetByName(name);
+        var state = await _stateRepo.GetByName(name.ToLower());
         if (state == null || state.Country == null) return null;
 
         return new StateResponseDto

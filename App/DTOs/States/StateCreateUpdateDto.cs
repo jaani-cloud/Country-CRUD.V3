@@ -5,7 +5,7 @@ namespace App.DTOs.States;
 public class StateCreateUpdateDto
 {
     [Required]
-    [StringLength(20, MinimumLength = 3)]
+    [StringLength(2, MinimumLength = 2)]
     public string Name { get; set; } = string.Empty;    
     public int CountryId { get; set; }
 }
