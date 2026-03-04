@@ -31,8 +31,10 @@ public class CityRepo : ICityRepo
     }
 
     public async Task<City?> GetByName(string name) =>
-        await _context.Cities.AsNoTracking().Include(c => c.State).FirstOrDefaultAsync(c => c.Name == name);
+        await _context.Cities.AsNoTracking().Include(c => c.State).ThenInclude(s => s.Country).FirstOrDefaultAsync(c => c.Name == name);
 
-    public async Task<City?> GetBYId(int id) => await _context.Cities.Include(c => c.State).FirstOrDefaultAsync(c => c.Id == id);
-    public async Task<List<City>> GetAll() => await _context.Cities.AsNoTracking().Include(c => c.State).ToListAsync();
+    public async Task<City?> GetById(int id) =>
+        await _context.Cities.Include(c => c.State).ThenInclude(s => s.Country).FirstOrDefaultAsync(c => c.Id == id);
+    public async Task<List<City>> GetAll() =>
+        await _context.Cities.AsNoTracking().Include(c => c.State).ThenInclude(s => s.Country).ToListAsync();
 }

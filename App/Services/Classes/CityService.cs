@@ -1,4 +1,5 @@
 ﻿using App.DTOs.Cities;
+using App.DTOs.Countries;
 using App.DTOs.States;
 using App.Services.Interfaces;
 using Domain.Entities;
@@ -31,7 +32,7 @@ public class CityService : ICityService
 
     public async Task Update(CityCreateUpdateDto input, int id)
     {
-        var city = await _cityRepo.GetBYId(id);
+        var city = await _cityRepo.GetById(id);
         var state = await _stateRepo.GetById(input.StateId);
 
         if (city == null || state == null) return;
@@ -43,7 +44,7 @@ public class CityService : ICityService
 
     public async Task Delete(int id)
     {
-        var city = await _cityRepo.GetBYId(id);
+        var city = await _cityRepo.GetById(id);
         if(city == null) return;
 
         await _cityRepo.Delete(city);
@@ -62,14 +63,19 @@ public class CityService : ICityService
             State = city.State == null ? null : new StateResponseDto
             {
                 Id = city.State.Id,
-                Name = city.State.Name
+                Name = city.State.Name,
+                Country = city.State.Country == null ? null : new CountryResponseDto
+                {
+                    Id = city.State.Country.Id,
+                    Name = city.State.Country.Name,
+                }
             }
         };
     }
 
     public async Task<CityResponseDto?> GetById(int id)
     {
-        var city = await _cityRepo.GetBYId(id);
+        var city = await _cityRepo.GetById(id);
         if (city == null) return null;
 
         return new CityResponseDto
@@ -79,7 +85,12 @@ public class CityService : ICityService
             State = city.State == null ? null : new StateResponseDto
             {
                 Id = city.State.Id,
-                Name = city.State.Name
+                Name = city.State.Name,
+                Country = city.State.Country == null ? null : new CountryResponseDto
+                {
+                    Id = city.State.Country.Id,
+                    Name = city.State.Country.Name
+                }
             }
         };
     }
@@ -95,7 +106,12 @@ public class CityService : ICityService
             State = c.State == null ? null : new StateResponseDto
             {
                 Id = c.State.Id,
-                Name = c.State.Name
+                Name = c.State.Name,
+                Country = c.State.Country == null ? null : new CountryResponseDto
+                {
+                    Id = c.State.Country.Id,
+                    Name = c.State.Country.Name
+                }
             }
         }).ToList();
     }
