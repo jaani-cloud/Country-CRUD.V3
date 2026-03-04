@@ -1,5 +1,7 @@
 
 using Infra.Data;
+using Infra.Repos.Classes;
+using Infra.Repos.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace API
@@ -19,6 +21,9 @@ namespace API
 
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
             builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionString));
+
+            builder.Services.AddScoped<ICountryRepo, CountryRepo>();
+            builder.Services.AddScoped<IStateRepo, StateRepo>();
 
             var app = builder.Build();
 
