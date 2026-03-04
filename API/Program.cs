@@ -30,6 +30,8 @@ namespace API
             builder.Services.AddScoped<ICountryService, CountryService>();
             builder.Services.AddScoped<IStateService, StateService>();
 
+            builder.Services.AddScoped<ICityRepo, CityRepo>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
