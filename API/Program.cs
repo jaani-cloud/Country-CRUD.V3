@@ -28,6 +28,7 @@ namespace API
             builder.Services.AddScoped<IStateRepo, StateRepo>();
 
             builder.Services.AddScoped<ICountryService, CountryService>();
+            builder.Services.AddScoped<IStateService, StateService>();
 
             var app = builder.Build();
 
